@@ -50,6 +50,8 @@ for eachProductBlock in productBlock:
             eachProductBlock.productformfeature.productformfeaturetype.string
             eachProductBlock.productformfeature.productformfeaturevalue.string
 
+        # Conditinal based on epub
+        eachProductBlock.epubtechnicalprotection.string
 
 
 
