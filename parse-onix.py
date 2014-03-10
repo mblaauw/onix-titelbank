@@ -18,7 +18,7 @@ for eachProductBlock in productBlock:
 
 
 
-    eachProductBlock.productcomposition.string
+
     eachProductBlock.productform.string
     eachProductBlock.editionnumber.string
     eachProductBlock.languagerole.string
@@ -28,7 +28,31 @@ for eachProductBlock in productBlock:
     eachProductBlock.subjectcode.string
     eachProductBlock.texttype.string
     eachProductBlock.contentaudience.string
-    eachProductBlock.text.string
+
+
+	eachProductBlock.productidentifier
+		eachProductBlock.productidtype.string
+		eachProductBlock.idvalue.string
+
+    # Interate
+    eachProductBlock.titledetail
+        eachProductBlock.titleelementlevel.next
+        eachProductBlock.titletext.string
+
+
+    # <descriptivedetail>
+    eachProductBlock.descriptivedetail
+        eachProductBlock.productcomposition.string
+        eachProductBlock.productform.string
+        eachProductBlock.productformdetail.string
+
+        eachProductBlock.productformfeature
+            eachProductBlock.productformfeature.productformfeaturetype.string
+            eachProductBlock.productformfeature.productformfeaturevalue.string
+
+
+
+
     eachProductBlock.supplierrole.string
     eachProductBlock.suppliername.string
     eachProductBlock.productavailability.string
@@ -41,6 +65,10 @@ for eachProductBlock in productBlock:
     eachProductBlock.publishingdaterole.string
     eachProductBlock.dateformat.string
     eachProductBlock.date.string
+
+    eachProductBlock.relatedmaterial.string
+    eachProductBlock.date.string
+
     """
 
 
@@ -70,40 +98,40 @@ soup.TitleText()
 
 
 
-	<Product>
-		<RecordReference>9789059372009</RecordReference>
-		<NotificationType>03</NotificationType>
-		<RecordSourceType>01</RecordSourceType>
-		<ProductIdentifier>
-			<ProductIDType>03</ProductIDType>
-			<IDValue>9789059372009</IDValue>
-		</ProductIdentifier>
-		<DescriptiveDetail>
-			<ProductComposition>00</ProductComposition>
-			<ProductForm>BB</ProductForm>
-			<NoCollection/>
-			<TitleDetail>
-				<TitleType>01</TitleType>
-				<TitleElement>
-					<TitleElementLevel>01</TitleElementLevel>
-					<TitleText>Nederland voor gevorderden</TitleText>
-				</TitleElement>
-			</TitleDetail>
-			<Contributor>
-				<SequenceNumber>1</SequenceNumber>
-				<ContributorRole>A01</ContributorRole>
-				<PersonName>Koning</PersonName>
-				<NamesBeforeKey>D.</NamesBeforeKey>
-				<KeyNames>Koning</KeyNames>
-			</Contributor>
-			<Contributor>
-				<SequenceNumber>2</SequenceNumber>
-				<ContributorRole>A01</ContributorRole>
-				<PersonName>Kloos</PersonName>
-				<NamesBeforeKey>M.</NamesBeforeKey>
-				<KeyNames>Kloos</KeyNames>
-			</Contributor>
-			<EditionNumber>1</EditionNumber>
+<Product>
+    <RecordReference>9789059372009</RecordReference>
+    <NotificationType>03</NotificationType>
+    <RecordSourceType>01</RecordSourceType>
+    <ProductIdentifier>
+        <ProductIDType>03</ProductIDType>
+        <IDValue>9789059372009</IDValue>
+    </ProductIdentifier>
+    <DescriptiveDetail>
+        <ProductComposition>00</ProductComposition>
+        <ProductForm>BB</ProductForm>
+        <NoCollection/>
+        <TitleDetail>
+            <TitleType>01</TitleType>
+            <TitleElement>
+                <TitleElementLevel>01</TitleElementLevel>
+                <TitleText>Nederland voor gevorderden</TitleText>
+            </TitleElement>
+        </TitleDetail>
+        <Contributor>
+            <SequenceNumber>1</SequenceNumber>
+            <ContributorRole>A01</ContributorRole>
+            <PersonName>Koning</PersonName>
+            <NamesBeforeKey>D.</NamesBeforeKey>
+            <KeyNames>Koning</KeyNames>
+        </Contributor>
+        <Contributor>
+            <SequenceNumber>2</SequenceNumber>
+            <ContributorRole>A01</ContributorRole>
+            <PersonName>Kloos</PersonName>
+            <NamesBeforeKey>M.</NamesBeforeKey>
+            <KeyNames>Kloos</KeyNames>
+        </Contributor>
+        <EditionNumber>1</EditionNumber>
 			<Language>
 				<LanguageRole>01</LanguageRole>
 				<LanguageCode>dut</LanguageCode>
@@ -175,3 +203,56 @@ soup.TitleText()
 			</SupplyDetail>
 		</ProductSupply>
 	</Product>
+<product>
+	<recordreference>9789492001023</recordreference>
+	<notificationtype>03</notificationtype>
+	<recordsourcetype>01</recordsourcetype>
+	<productidentifier>
+		<productidtype>03</productidtype>
+		<idvalue>9789492001023</idvalue>
+	</productidentifier>
+	<descriptivedetail>
+		<productcomposition>00</productcomposition>
+		<productform>00</productform>
+		<productformdetail>E101</productformdetail>
+		<productformfeature>
+			<productformfeaturetype>10</productformfeaturetype>
+			<productformfeaturevalue>3</productformfeaturevalue>
+		</productformfeature>
+		<epubtechnicalprotection>02</epubtechnicalprotection>
+		<nocollection/>
+		<titledetail>
+			<titletype>01</titletype>
+			<titleelement>
+				<titleelementlevel>01</titleelementlevel>
+				<titletext>leerjaar: 3 - lesboek + handboek - niveau: HV - schoolcode: 330 - D</titletext>
+			</titleelement>
+			<titleelement>
+				<titleelementlevel>02</titleelementlevel>
+				<titletext>Leswijs Nederlands</titletext>
+			</titleelement>
+		</titledetail>
+		<nocontributor/>
+		<editionnumber>1</editionnumber>
+		<language>
+			<languagerole>01</languagerole>
+			<languagecode>dut</languagecode>
+		</language>
+		<illustrated>01</illustrated>
+		<subject>
+			<mainsubject/>
+			<subjectschemeidentifier>32</subjectschemeidentifier>
+			<subjectcode>112</subjectcode>
+		</subject>
+	</descriptivedetail>
+	<publishingdetail>
+		<publisher>
+			<publishingrole>01</publishingrole>
+			<publisheridentifier>
+				<publisheridtype>10</publisheridtype>
+				<idvalue>7366006</idvalue>
+			</publisheridentifier>
+		</publisher>
+	</publishingdetail>
+	<relatedmaterial/>
+</product>
