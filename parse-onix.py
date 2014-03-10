@@ -1,17 +1,53 @@
 __author__ = 'mich'
+from bs4 import BeautifulSoup
+
+onxFile = 'data/TB30_totaal_2014-03_073van073.onx'
+soup = BeautifulSoup(open(onxFile, 'r'), features='lxml')
+
+# step through all product blocks
+productBlock = soup.find_all('product')
+for eachProductBlock in productBlock:
+    eachProductBlock.recordreference.string
+    eachProductBlock.notificationtype.string
+    eachProductBlock.productidtype.string
+    eachProductBlock.idvalue.string
 
 
-from bs4 import BeautifulStoneSoup
-import requests
+
+    """
 
 
-file = '/Users/mich/datascience-projects/onix-titelbank/titelbank/TB30_totaal_2014-03_073van073.onx/TB30_totaal_2014-03_073van073.onx'
-soup = BeautifulStoneSoup(open(file, 'r'))
+
+    eachProductBlock.productcomposition.string
+    eachProductBlock.productform.string
+    eachProductBlock.editionnumber.string
+    eachProductBlock.languagerole.string
+    eachProductBlock.languagecode.string
+    eachProductBlock.illustrated.string
+    eachProductBlock.subjectschemeidentifier.string
+    eachProductBlock.subjectcode.string
+    eachProductBlock.texttype.string
+    eachProductBlock.contentaudience.string
+    eachProductBlock.text.string
+    eachProductBlock.supplierrole.string
+    eachProductBlock.suppliername.string
+    eachProductBlock.productavailability.string
+    eachProductBlock.pricetype.string
+    eachProductBlock.priceamount.string
+    eachProductBlock.publishingrole.string
+    eachProductBlock.publisheridtype.string
+    eachProductBlock.idvalue.string
+    eachProductBlock.publishingstatus.string
+    eachProductBlock.publishingdaterole.string
+    eachProductBlock.dateformat.string
+    eachProductBlock.date.string
+    """
 
 
-RecordReference = soup.find_all('RecordReference')
-for eachRecordReference in RecordReference:
-    print eachRecordReference
+
+    # cook new soup from a productBlock before parsing further
+    productSoup = BeautifulSoup(str(eachProductBlock))
+    productSoup.find('RecordReference')
 
 
 soup.find_all('ProductIDType')
