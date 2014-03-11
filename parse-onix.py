@@ -65,20 +65,21 @@ for eachProductBlock in productBlock:
         extentBlock = extentSoup.find_all('extent')
         if len(extentBlock) != 0:
             for eachExtentBlock in extentBlock:
-                chkExtentValue = extentSoup.find_all('extentype')
-                if len(chkExtentValue) != 0:
+
+                chkExtentType = eachExtentBlock.find_all('extenttype')
+                if len(chkExtentType) != 0 and eachExtentBlock.extenttype.string == '00':
                     extentType.append(eachExtentBlock.extenttype.string)
                 else:
                     extentType.append('')
 
-                chkExtentValue = extentSoup.find_all('extentvalue')
-                if len(chkExtentValue) != 0:
+                chkExtentValue = eachExtentBlock.find_all('extentvalue')
+                if len(chkExtentValue) != 0 and eachExtentBlock.extenttype.string == '00':
                     extentValue.append(eachExtentBlock.extentvalue.string)
                 else:
                     extentValue.append('')
 
-                chkExtentUnit = extentSoup.find_all('extentunit')
-                if len(chkExtentUnit) != 0:
+                chkExtentUnit = eachExtentBlock.find_all('extentunit')
+                if len(chkExtentUnit) != 0 and eachExtentBlock.extenttype.string == '00':
                     extentUnit.append(eachExtentBlock.extentunit.string)
                 else:
                     extentUnit.append('')
