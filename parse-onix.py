@@ -2,7 +2,6 @@ __author__ = 'mich'
 import numpy as np
 import sqlite3
 from bs4 import BeautifulSoup
-import io
 
 idValue = list()
 idType = list()
@@ -44,14 +43,25 @@ def parseOnxFiles(onxFile):
         descriptiveSoup = BeautifulSoup(str(eachProductBlock), features='lxml')
         descriptiveBlock = descriptiveSoup.find_all('descriptivedetail')
         for eachDescriptiveBlock in descriptiveBlock:
-            productComposition.append(eachDescriptiveBlock.productcomposition.string)
-            productForm.append(eachDescriptiveBlock.productform.string)
-
+            chkProductComposition = descriptiveSoup.find_all('productcomposition')
+            chkProductForm = descriptiveSoup.find_all('productform')
             chkEditionNumber = descriptiveSoup.find_all('editionnumber')
             chkEditionStatement = descriptiveSoup.find_all('editionstatement')
             chkIllustratedType = descriptiveSoup.find_all('illustrated')
             chkLanguageRole = descriptiveSoup.find_all('languagerole')
             chkLanguageCode = descriptiveSoup.find_all('languagecode')
+            chkSubjectSchemeIdentifier = descriptiveSoup.find_all('subjectschemeidentifier')
+            chkSubjectCode = descriptiveSoup.find_all('subjectcode')
+
+            if len(chkProductComposition) != 0:
+                productComposition.append(eachDescriptiveBlock.productcomposition.string)
+            else:
+                productComposition.append('')
+
+            if len(chkProductForm) != 0:
+                productForm.append(eachDescriptiveBlock.productform.string)
+            else:
+                productForm.append('')
 
             if len(chkEditionNumber) != 0:
                 editionNumber.append(eachDescriptiveBlock.editionnumber.string)
@@ -78,8 +88,15 @@ def parseOnxFiles(onxFile):
             else:
                 languageCode.append('')
 
-            subjectSchemeIdentifier.append(eachDescriptiveBlock.subjectschemeidentifier.string)
-            subjectCode.append(eachDescriptiveBlock.subjectcode.string)
+            if len(chkSubjectSchemeIdentifier) != 0:
+                subjectSchemeIdentifier.append(eachDescriptiveBlock.subjectschemeidentifier.string)
+            else:
+                subjectSchemeIdentifier.append('')
+
+            if len(chkSubjectCode) != 0:
+                subjectCode.append(eachDescriptiveBlock.subjectcode.string)
+            else:
+                subjectCode.append('')
 
             # collect extent details
             extentSoup = BeautifulSoup(str(eachDescriptiveBlock), features='lxml')
@@ -160,7 +177,8 @@ for i in range(40,74):
     onxFile = 'titelbank/TB30_totaal_2014-03_' + fileNr + 'van073.onx/TB30_totaal_2014-03_' + fileNr + 'van073.onx'
 
     result = parseOnxFiles(onxFile)
-    store_results(result)
+
+#store_results(result)
 
 
 
