@@ -19,9 +19,19 @@ for eachProductBlock in productBlock:
         publishingDate = eachPublishBlock.date.string
 
     # collect descriptive details
+    descriptiveSoup = BeautifulSoup(str(eachProductBlock), features='lxml')
+    descriptiveBlock = descriptiveSoup.find_all('descriptivedetail')
+    for eachDescriptiveBlock in descriptiveBlock:
+        productComposition  = eachDescriptiveBlock.productcomposition.string
+        productForm = eachDescriptiveBlock.productform.string
+        editionNumber = eachDescriptiveBlock.editionnumber.string
+        illustratedType = eachDescriptiveBlock.illustrated.string
+        languageRole = eachDescriptiveBlock.languagerole.string
+        languageCode = eachDescriptiveBlock.languagecode.string
+        subjectSchemeIdentifier = eachDescriptiveBlock.languagecode.string
+        subjectCode = eachDescriptiveBlock.languagecode.string
 
-
-
+        #print idValue, productComposition, productForm
 
 
 
