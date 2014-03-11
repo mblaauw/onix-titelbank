@@ -24,12 +24,34 @@ for eachProductBlock in productBlock:
     for eachDescriptiveBlock in descriptiveBlock:
         productComposition  = eachDescriptiveBlock.productcomposition.string
         productForm = eachDescriptiveBlock.productform.string
-        editionNumber = eachDescriptiveBlock.editionnumber.string
+
+        chkEditionNumber = descriptiveSoup.find_all('editionnumber')
+        chkEditionStatement = descriptiveSoup.find_all('editionstatement')
+
+        if len(chkEditionNumber) != 0:
+            editionNumber = eachDescriptiveBlock.editionnumber.string
+        else:
+            editionNumber = ''
+
+        if len(chkEditionStatement) != 0:
+            editionStatement = eachDescriptiveBlock.editionstatement.string
+        else:
+            editionStatement = ''
+
         illustratedType = eachDescriptiveBlock.illustrated.string
         languageRole = eachDescriptiveBlock.languagerole.string
         languageCode = eachDescriptiveBlock.languagecode.string
-        subjectSchemeIdentifier = eachDescriptiveBlock.languagecode.string
+        subjectSchemeIdentifier = eachDescriptiveBlock.subjectschemeidentifier.string
         subjectCode = eachDescriptiveBlock.languagecode.string
+
+        # collect extent details
+        extentSoup = BeautifulSoup(str(eachDescriptiveBlock), features='lxml')
+        extentBlock = extentSoup.find_all('extent')
+        if extentBlock != 0:
+            for eachExtentBlock in extentBlock:
+                print eachExtentBlock.extenttype.string
+
+
 
         #print idValue, productComposition, productForm
 
