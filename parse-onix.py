@@ -1,5 +1,8 @@
 __author__ = 'mich'
+import numpy as np
+import sqlite3
 from bs4 import BeautifulSoup
+import io
 
 idValue = list()
 idType = list()
@@ -85,5 +88,33 @@ for eachProductBlock in productBlock:
                     extentUnit.append('')
 
 
-result = zip(idValue, idType, publishingRole, publishingDateFormat,publishingDate,productComposition, productForm, editionStatement, editionNumber, illustratedType, languageRole, languageCode, subjectSchemeIdentifier, subjectCode, extentType, extentUnit, extentValue)
+result = np.array(zip(idValue, idType, publishingRole, publishingDateFormat,publishingDate,productComposition, productForm, editionStatement, editionNumber, illustratedType, languageRole, languageCode, subjectSchemeIdentifier, subjectCode, extentType, extentUnit, extentValue))
+
+conn = sqlite3.connect('sample.db')
+cursor = conn.cursor()
+cursor.execute('''create table data (
+	idValue NVARCHAR(13),
+	idType NVARCHAR(5),
+	publishingRole NVARCHAR(5),
+	publishingDateFormat NVARCHAR(5),
+	publishingDate NVARCHAR(8),
+	productComposition NVARCHAR(5),
+	productForm NVARCHAR(5),
+	editionStatement NVARCHAR(15),
+	editionNumber NVARCHAR(5),
+	illustratedType NVARCHAR(5),
+	languageRole NVARCHAR(5),
+	languageCode NVARCHAR(5),
+	subjectSchemeIdentifier NVARCHAR(5),
+	subjectCode NVARCHAR(5),
+	extentType NVARCHAR(5),
+	extentUnit NVARCHAR(5),
+	extentValue  NVARCHAR(5)
+)''')
+conn.commit()
+
+cursor.executemany('''insert into data values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', map(tuple, result.tolist()))
+conn.commit()
+cursor.close()
+conn.close()
 
