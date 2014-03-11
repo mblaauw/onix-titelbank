@@ -23,10 +23,13 @@ extentValue = list()
 
 
 def parseOnxFiles(onxFile):
+    print onxFile
     soup = BeautifulSoup(open(onxFile, 'r'), features='lxml')
 
     # collect unique ID's
     productBlock = soup.find_all('product')
+    print 'books to process: ' + str(len(productBlock))
+
     for eachProductBlock in productBlock:
         idValue.append(eachProductBlock.idvalue.string)
         idType.append(eachProductBlock.productidtype.string)
@@ -167,7 +170,7 @@ def create_initial_db(dbName = 'sample.db'):
 
 
 
-for i in range(40,74):
+for i in range(20,22):
     if len(str(i)) == 1:
         fileNr = '00' + str(i)
     else:
@@ -177,8 +180,7 @@ for i in range(40,74):
     onxFile = 'titelbank/TB30_totaal_2014-03_' + fileNr + 'van073.onx/TB30_totaal_2014-03_' + fileNr + 'van073.onx'
 
     result = parseOnxFiles(onxFile)
-
-#store_results(result)
+    store_results(result)
 
 
 
