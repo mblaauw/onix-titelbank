@@ -49,11 +49,21 @@ for eachProductBlock in productBlock:
         extentBlock = extentSoup.find_all('extent')
         if extentBlock != 0:
             for eachExtentBlock in extentBlock:
-                print eachExtentBlock.extenttype.string
+                extentType = eachExtentBlock.extenttype.string
 
+                chkExtentValue = extentSoup.find_all('extentvalue')
+                if len(chkExtentValue) != 0:
+                    extentValue = eachExtentBlock.extentvalue.string
+                else:
+                    extentValue = ''
 
+                chkExtentUnit = extentSoup.find_all('extentunit')
+                if len(chkExtentUnit) != 0:
+                    extentUnit = eachExtentBlock.extentunit.string
+                else:
+                    extentUnit = ''
 
-        #print idValue, productComposition, productForm
+        print idValue, extentunit
 
 
 
