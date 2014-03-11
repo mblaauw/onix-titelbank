@@ -24,7 +24,7 @@ extentValue = list()
 
 def parseOnxFiles(onxFile):
     print onxFile
-    soup = BeautifulSoup(open(onxFile, 'r'), features='lxml')
+    soup = BeautifulSoup(open(onxFile, 'r'), features='xml')
 
     # collect unique ID's
     productBlock = soup.find_all('product')
