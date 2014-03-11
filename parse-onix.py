@@ -4,9 +4,31 @@ from bs4 import BeautifulSoup
 onxFile = 'data/TB30_totaal_2014-03_073van073.onx'
 soup = BeautifulSoup(open(onxFile, 'r'), features='lxml')
 
-# step through all product blocks
+# collect unique ID's
 productBlock = soup.find_all('product')
 for eachProductBlock in productBlock:
+    idValue = eachProductBlock.idvalue.string
+    idType = eachProductBlock.productidtype.string
+
+    # collect publishing details
+    publishingSoup = BeautifulSoup(str(eachProductBlock), features='lxml')
+    publishingBlock = publishingSoup.find_all('publishingdate')
+    for eachPublishBlock in publishingBlock:
+        publishingRole = eachPublishBlock.publishingdaterole.string
+        publishingDateFormat = eachPublishBlock.dateformat.string
+        publishingDate = eachPublishBlock.date.string
+
+    # collect descriptive details
+
+
+
+
+
+
+
+
+
+
     eachProductBlock.recordreference.string
     eachProductBlock.notificationtype.string
     eachProductBlock.productidtype.string
