@@ -27,7 +27,7 @@ def parseOnxFiles(onxFile):
     soup = BeautifulSoup(open(onxFile, 'r'), features='xml')
 
     # collect unique ID's
-    productBlock = soup.find_all('product')
+    productBlock = soup.find_all('Product')
     print 'books to process: ' + str(len(productBlock))
 
     for eachProductBlock in productBlock:
@@ -35,26 +35,26 @@ def parseOnxFiles(onxFile):
         idType.append(eachProductBlock.productidtype.string)
 
         # collect publishing details
-        publishingSoup = BeautifulSoup(str(eachProductBlock), features='lxml')
-        publishingBlock = publishingSoup.find_all('publishingdate')
+        publishingSoup = BeautifulSoup(str(eachProductBlock), features='xml')
+        publishingBlock = publishingSoup.find_all('publishingDate')
         for eachPublishBlock in publishingBlock:
             publishingRole.append(eachPublishBlock.publishingdaterole.string)
             publishingDateFormat.append(eachPublishBlock.dateformat.string)
             publishingDate.append(eachPublishBlock.date.string)
 
         # collect descriptive details
-        descriptiveSoup = BeautifulSoup(str(eachProductBlock), features='lxml')
-        descriptiveBlock = descriptiveSoup.find_all('descriptivedetail')
+        descriptiveSoup = BeautifulSoup(str(eachProductBlock), features='xml')
+        descriptiveBlock = descriptiveSoup.find_all('DescriptiveDetail')
         for eachDescriptiveBlock in descriptiveBlock:
-            chkProductComposition = descriptiveSoup.find_all('productcomposition')
-            chkProductForm = descriptiveSoup.find_all('productform')
-            chkEditionNumber = descriptiveSoup.find_all('editionnumber')
-            chkEditionStatement = descriptiveSoup.find_all('editionstatement')
-            chkIllustratedType = descriptiveSoup.find_all('illustrated')
-            chkLanguageRole = descriptiveSoup.find_all('languagerole')
-            chkLanguageCode = descriptiveSoup.find_all('languagecode')
-            chkSubjectSchemeIdentifier = descriptiveSoup.find_all('subjectschemeidentifier')
-            chkSubjectCode = descriptiveSoup.find_all('subjectcode')
+            chkProductComposition = descriptiveSoup.find_all('ProductComposition')
+            chkProductForm = descriptiveSoup.find_all('ProductForm')
+            chkEditionNumber = descriptiveSoup.find_all('EditionNumber')
+            chkEditionStatement = descriptiveSoup.find_all('EditionStatement')
+            chkIllustratedType = descriptiveSoup.find_all('Illustrated')
+            chkLanguageRole = descriptiveSoup.find_all('LanguageRole')
+            chkLanguageCode = descriptiveSoup.find_all('LanguageCode')
+            chkSubjectSchemeIdentifier = descriptiveSoup.find_all('SubjectSchemeIdentifier')
+            chkSubjectCode = descriptiveSoup.find_all('SubjectCode')
 
             if len(chkProductComposition) != 0:
                 productComposition.append(eachDescriptiveBlock.productcomposition.string)
@@ -102,24 +102,24 @@ def parseOnxFiles(onxFile):
                 subjectCode.append('')
 
             # collect extent details
-            extentSoup = BeautifulSoup(str(eachDescriptiveBlock), features='lxml')
-            extentBlock = extentSoup.find_all('extent')
+            extentSoup = BeautifulSoup(str(eachDescriptiveBlock), features='xml')
+            extentBlock = extentSoup.find_all('Extent')
             if len(extentBlock) != 0:
                 for eachExtentBlock in extentBlock:
 
-                    chkExtentType = eachExtentBlock.find_all('extenttype')
+                    chkExtentType = eachExtentBlock.find_all('ExtentType')
                     if len(chkExtentType) != 0 and eachExtentBlock.extenttype.string == '00':
                         extentType.append(eachExtentBlock.extenttype.string)
                     else:
                         extentType.append('')
 
-                    chkExtentValue = eachExtentBlock.find_all('extentvalue')
+                    chkExtentValue = eachExtentBlock.find_all('ExtentValue')
                     if len(chkExtentValue) != 0 and eachExtentBlock.extenttype.string == '00':
                         extentValue.append(eachExtentBlock.extentvalue.string)
                     else:
                         extentValue.append('')
 
-                    chkExtentUnit = eachExtentBlock.find_all('extentunit')
+                    chkExtentUnit = eachExtentBlock.find_all('ExtentUnit')
                     if len(chkExtentUnit) != 0 and eachExtentBlock.extenttype.string == '00':
                         extentUnit.append(eachExtentBlock.extentunit.string)
                     else:
