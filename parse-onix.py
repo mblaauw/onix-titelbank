@@ -31,29 +31,31 @@ def parseOnxFiles(onxFile):
     print 'books to process: ' + str(len(productBlock))
 
     for eachProductBlock in productBlock:
+        # EXPERIMENTAL
 
-        chkIdValue = eachProductBlock.find_all('IDValue')
-        print chkIdValue
-        if len(chkIdValue) != 0:
-            idValue.append(eachProductBlock.idvalue.string)
-        else:
-            idValue.append('')
 
-        chkIdType = eachProductBlock.find_all('IDType')
-        if len(chkIdValue) != 0:
 
-            idType.append(eachProductBlock.productidtype.string)
-        else:
-            idType.append('')
+
+
+
+
+
+        #####
+
+
+
+
+
+
+        # collect id details
+        idValue.append(eachProductBlock.find_all('RecordReference')[0].string)
+        idType.append(eachProductBlock.find_all('NotificationType')[0].string)
 
 
         # collect publishing details
-        publishingSoup = BeautifulSoup(str(eachProductBlock), features='xml')
-        publishingBlock = publishingSoup.find_all('PublishingDate')
-        for eachPublishBlock in publishingBlock:
-            publishingRole.append(eachPublishBlock.publishingdaterole.string)
-            publishingDateFormat.append(eachPublishBlock.dateformat.string)
-            publishingDate.append(eachPublishBlock.date.string)
+        publishingRole.append(eachProductBlock.find_all('PublishingRole')[0].string)
+        publishingDateFormat.append(eachProductBlock.find_all('PublishingDateFormat')[0].string)
+        publishingDate.append(eachProductBlock.find_all('PublishingDateFormat')[0].string)
 
         # collect descriptive details
         descriptiveSoup = BeautifulSoup(str(eachProductBlock), features='xml')
@@ -70,47 +72,47 @@ def parseOnxFiles(onxFile):
             chkSubjectCode = descriptiveSoup.find_all('SubjectCode')
 
             if len(chkProductComposition) != 0:
-                productComposition.append(eachDescriptiveBlock.productcomposition.string)
+                productComposition.append(chkProductComposition[0].string)
             else:
                 productComposition.append('')
 
             if len(chkProductForm) != 0:
-                productForm.append(eachDescriptiveBlock.productform.string)
+                productForm.append(chkProductForm[0].string)
             else:
                 productForm.append('')
 
             if len(chkEditionNumber) != 0:
-                editionNumber.append(eachDescriptiveBlock.editionnumber.string)
+                editionNumber.append(chkEditionNumber[0].string)
             else:
                 editionNumber.append('')
 
             if len(chkEditionStatement) != 0:
-                editionStatement.append(eachDescriptiveBlock.editionstatement.string)
+                editionStatement.append(chkEditionStatement[0].string)
             else:
                 editionStatement.append('')
 
             if len(chkIllustratedType) != 0:
-                illustratedType.append(eachDescriptiveBlock.illustrated.string)
+                illustratedType.append(chkIllustratedType[0].string)
             else:
                 illustratedType.append('')
 
-            if len(chkIllustratedType) != 0:
-                languageRole.append(eachDescriptiveBlock.languagerole.string)
+            if len(chkLanguageRole) != 0:
+                languageRole.append(chkLanguageRole[0].string)
             else:
                 languageRole.append('')
 
-            if len(chkIllustratedType) != 0:
-                languageCode.append(eachDescriptiveBlock.languagecode.string)
+            if len(chkLanguageCode) != 0:
+                languageCode.append(chkLanguageCode[0].string)
             else:
                 languageCode.append('')
 
             if len(chkSubjectSchemeIdentifier) != 0:
-                subjectSchemeIdentifier.append(eachDescriptiveBlock.subjectschemeidentifier.string)
+                subjectSchemeIdentifier.append(chkSubjectSchemeIdentifier[0].string)
             else:
                 subjectSchemeIdentifier.append('')
 
             if len(chkSubjectCode) != 0:
-                subjectCode.append(eachDescriptiveBlock.subjectcode.string)
+                subjectCode.append(chkSubjectCode[0].string)
             else:
                 subjectCode.append('')
 
