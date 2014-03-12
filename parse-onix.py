@@ -31,12 +31,25 @@ def parseOnxFiles(onxFile):
     print 'books to process: ' + str(len(productBlock))
 
     for eachProductBlock in productBlock:
-        idValue.append(eachProductBlock.idvalue.string)
-        idType.append(eachProductBlock.productidtype.string)
+
+        chkIdValue = eachProductBlock.find_all('IDValue')
+        print chkIdValue
+        if len(chkIdValue) != 0:
+            idValue.append(eachProductBlock.idvalue.string)
+        else:
+            idValue.append('')
+
+        chkIdType = eachProductBlock.find_all('IDType')
+        if len(chkIdValue) != 0:
+
+            idType.append(eachProductBlock.productidtype.string)
+        else:
+            idType.append('')
+
 
         # collect publishing details
         publishingSoup = BeautifulSoup(str(eachProductBlock), features='xml')
-        publishingBlock = publishingSoup.find_all('publishingDate')
+        publishingBlock = publishingSoup.find_all('PublishingDate')
         for eachPublishBlock in publishingBlock:
             publishingRole.append(eachPublishBlock.publishingdaterole.string)
             publishingDateFormat.append(eachPublishBlock.dateformat.string)
