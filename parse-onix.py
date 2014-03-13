@@ -3,26 +3,26 @@ import numpy as np
 import sqlite3
 from bs4 import BeautifulSoup
 
-idValue = list()
-idType = list()
-publishingRole = list()
-publishingDateFormat = list()
-publishingDate = list()
-productComposition = list()
-productForm = list()
-editionStatement = list()
-editionNumber  = list()
-illustratedType  = list()
-languageRole = list()
-languageCode = list()
-subjectSchemeIdentifier = list()
-subjectCode = list()
-extentType = list()
-extentUnit = list()
-extentValue = list()
-
 
 def parseOnxFiles(onxFile):
+    idValue = list()
+    idType = list()
+    publishingRole = list()
+    publishingDateFormat = list()
+    publishingDate = list()
+    productComposition = list()
+    productForm = list()
+    editionStatement = list()
+    editionNumber  = list()
+    illustratedType  = list()
+    languageRole = list()
+    languageCode = list()
+    subjectSchemeIdentifier = list()
+    subjectCode = list()
+    extentType = list()
+    extentUnit = list()
+    extentValue = list()
+
     print onxFile
     soup = BeautifulSoup(open(onxFile, 'r'), features='xml')
 
@@ -45,9 +45,9 @@ def parseOnxFiles(onxFile):
             idType.append('')
 
         # collect publishing details
-        chkPublishingRole = eachProductBlock.find_all('PublishingRole')
-        chkPublishingDateFormat = eachProductBlock.find_all('PublishingDateFormat')
-        chkPublishingDate = eachProductBlock.find_all('PublishingDateFormat')
+        chkPublishingRole = eachProductBlock.find_all('PublishingDateRole')
+        chkPublishingDateFormat = eachProductBlock.find_all('DateFormat')
+        chkPublishingDate = eachProductBlock.find_all('Date')
         if len(chkPublishingRole) != 0:
             publishingRole.append(chkPublishingRole[0].string)
         else:
@@ -62,7 +62,6 @@ def parseOnxFiles(onxFile):
             publishingDate.append(chkPublishingDate[0].string)
         else:
             publishingDate.append('')
-
 
         # collect descriptive details
         descriptiveSoup = BeautifulSoup(str(eachProductBlock), features='xml')
@@ -126,7 +125,7 @@ def parseOnxFiles(onxFile):
             # collect extent details
             extentSoup = BeautifulSoup(str(eachDescriptiveBlock), features='xml')
             extentBlock = extentSoup.find_all('Extent')
-            if len(extentBlock) != 0:
+            if len(extentBlock) == 1:
                 for eachExtentBlock in extentBlock:
 
                     chkExtentType = eachExtentBlock.find_all('ExtentType')
@@ -147,9 +146,30 @@ def parseOnxFiles(onxFile):
                         extentUnit.append(chkExtentUnit[0].string)
                     else:
                         extentUnit.append('')
-
+            else:
+                extentType.append('')
+                extentValue.append('')
+                extentUnit.append('')
 
     result = np.array(zip(idValue, idType, publishingRole, publishingDateFormat,publishingDate,productComposition, productForm, editionStatement, editionNumber, illustratedType, languageRole, languageCode, subjectSchemeIdentifier, subjectCode, extentType, extentUnit, extentValue))
+
+    print len(idValue)
+    print len(idType)
+    print len(publishingRole)
+    print len(publishingDateFormat)
+    print len(publishingDate)
+    print len(productComposition)
+    print len(productForm)
+    print len(editionStatement)
+    print len(editionNumber)
+    print len(illustratedType)
+    print len(languageRole)
+    print len(languageCode)
+    print len(subjectSchemeIdentifier)
+    print len(subjectCode)
+    print len(extentType)
+    print len(extentUnit)
+    print len(extentValue)
 
     return result
 
@@ -191,7 +211,7 @@ def create_initial_db(dbName = 'sample.db'):
     conn.close()
 
 
-for i in range(2,73):
+for i in range(1,73):
     if len(str(i)) == 1:
         fileNr = '00' + str(i)
     else:
@@ -199,7 +219,6 @@ for i in range(2,73):
 
 
     onxFile = 'titelbank/TB30_totaal_2014-03_' + fileNr + 'van073.onx/TB30_totaal_2014-03_' + fileNr + 'van073.onx'
-
     result = parseOnxFiles(onxFile)
     store_results(result)
 
