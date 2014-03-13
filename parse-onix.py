@@ -31,45 +31,52 @@ def parseOnxFiles(onxFile):
     print 'books to process: ' + str(len(productBlock))
 
     for eachProductBlock in productBlock:
-        # EXPERIMENTAL
-
-
-
-
-
-
-
-
-        #####
-
-
-
-
-
-
         # collect id details
-        idValue.append(eachProductBlock.find_all('RecordReference')[0].string)
-        idType.append(eachProductBlock.find_all('NotificationType')[0].string)
+        chkIdValue = eachProductBlock.find_all('RecordReference')
+        chkIdType = eachProductBlock.find_all('NotificationType')
+        if len(chkIdValue) != 0:
+            idValue.append(chkIdValue[0].string)
+        else:
+            idValue.append('')
 
+        if len(chkIdType) != 0:
+            idType.append(chkIdType[0].string)
+        else:
+            idType.append('')
 
         # collect publishing details
-        publishingRole.append(eachProductBlock.find_all('PublishingRole')[0].string)
-        publishingDateFormat.append(eachProductBlock.find_all('PublishingDateFormat')[0].string)
-        publishingDate.append(eachProductBlock.find_all('PublishingDateFormat')[0].string)
+        chkPublishingRole = eachProductBlock.find_all('PublishingRole')
+        chkPublishingDateFormat = eachProductBlock.find_all('PublishingDateFormat')
+        chkPublishingDate = eachProductBlock.find_all('PublishingDateFormat')
+        if len(chkPublishingRole) != 0:
+            publishingRole.append(chkPublishingRole[0].string)
+        else:
+            publishingRole.append('')
+
+        if len(chkPublishingDateFormat) != 0:
+            publishingDateFormat.append(chkPublishingDateFormat[0].string)
+        else:
+            publishingDateFormat.append('')
+
+        if len(chkPublishingDate) != 0:
+            publishingDate.append(chkPublishingDate[0].string)
+        else:
+            publishingDate.append('')
+
 
         # collect descriptive details
         descriptiveSoup = BeautifulSoup(str(eachProductBlock), features='xml')
         descriptiveBlock = descriptiveSoup.find_all('DescriptiveDetail')
         for eachDescriptiveBlock in descriptiveBlock:
-            chkProductComposition = descriptiveSoup.find_all('ProductComposition')
-            chkProductForm = descriptiveSoup.find_all('ProductForm')
-            chkEditionNumber = descriptiveSoup.find_all('EditionNumber')
-            chkEditionStatement = descriptiveSoup.find_all('EditionStatement')
-            chkIllustratedType = descriptiveSoup.find_all('Illustrated')
-            chkLanguageRole = descriptiveSoup.find_all('LanguageRole')
-            chkLanguageCode = descriptiveSoup.find_all('LanguageCode')
-            chkSubjectSchemeIdentifier = descriptiveSoup.find_all('SubjectSchemeIdentifier')
-            chkSubjectCode = descriptiveSoup.find_all('SubjectCode')
+            chkProductComposition = eachDescriptiveBlock.find_all('ProductComposition')
+            chkProductForm = eachDescriptiveBlock.find_all('ProductForm')
+            chkEditionNumber = eachDescriptiveBlock.find_all('EditionNumber')
+            chkEditionStatement = eachDescriptiveBlock.find_all('EditionStatement')
+            chkIllustratedType = eachDescriptiveBlock.find_all('Illustrated')
+            chkLanguageRole = eachDescriptiveBlock.find_all('LanguageRole')
+            chkLanguageCode = eachDescriptiveBlock.find_all('LanguageCode')
+            chkSubjectSchemeIdentifier = eachDescriptiveBlock.find_all('SubjectSchemeIdentifier')
+            chkSubjectCode = eachDescriptiveBlock.find_all('SubjectCode')
 
             if len(chkProductComposition) != 0:
                 productComposition.append(chkProductComposition[0].string)
@@ -123,20 +130,21 @@ def parseOnxFiles(onxFile):
                 for eachExtentBlock in extentBlock:
 
                     chkExtentType = eachExtentBlock.find_all('ExtentType')
-                    if len(chkExtentType) != 0 and eachExtentBlock.extenttype.string == '00':
-                        extentType.append(eachExtentBlock.extenttype.string)
+                    chkExtentValue = eachExtentBlock.find_all('ExtentValue')
+                    chkExtentUnit = eachExtentBlock.find_all('ExtentUnit')
+
+                    if len(chkExtentType) != 0:
+                        extentType.append(chkExtentType[0].string)
                     else:
                         extentType.append('')
 
-                    chkExtentValue = eachExtentBlock.find_all('ExtentValue')
-                    if len(chkExtentValue) != 0 and eachExtentBlock.extenttype.string == '00':
-                        extentValue.append(eachExtentBlock.extentvalue.string)
+                    if len(chkExtentValue) != 0:
+                        extentValue.append(chkExtentValue[0].string)
                     else:
                         extentValue.append('')
 
-                    chkExtentUnit = eachExtentBlock.find_all('ExtentUnit')
-                    if len(chkExtentUnit) != 0 and eachExtentBlock.extenttype.string == '00':
-                        extentUnit.append(eachExtentBlock.extentunit.string)
+                    if len(chkExtentUnit) != 0:
+                        extentUnit.append(chkExtentUnit[0].string)
                     else:
                         extentUnit.append('')
 
@@ -183,9 +191,7 @@ def create_initial_db(dbName = 'sample.db'):
     conn.close()
 
 
-
-
-for i in range(20,22):
+for i in range(2,73):
     if len(str(i)) == 1:
         fileNr = '00' + str(i)
     else:
