@@ -211,7 +211,7 @@ def create_initial_db(dbName = 'sample.db'):
     conn.close()
 
 
-for i in range(1,73):
+for i in range(73,74):
     if len(str(i)) == 1:
         fileNr = '00' + str(i)
     else:
