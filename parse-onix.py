@@ -1,5 +1,6 @@
 __author__ = 'mich'
 import numpy as np
+import csv
 import sqlite3
 from bs4 import BeautifulSoup
 
@@ -171,6 +172,46 @@ def parseOnxFiles(onxFile):
     print len(extentUnit)
     print len(extentValue)
 
+    print eachProductBlock
+    return result
+
+
+def parseOnxFilesRelated(onxFile):
+
+    origId = list()
+    relId = list()
+
+    print onxFile
+
+    soup = BeautifulSoup(open(onxFile, 'r'), features='xml')
+
+    # collect unique ID's
+    productBlock = soup.find_all('Product')
+
+    for eachProductBlock in productBlock:
+        # collect id details
+        chkIdValue = eachProductBlock.find_all('RecordReference')
+        chkIdType = eachProductBlock.find_all('NotificationType')
+
+        # collect RelatedMaterial details
+        originalIsbn = chkIdValue[0].string
+
+        relatedSoup = BeautifulSoup(str(eachProductBlock), features='xml')
+        relatedBlock = relatedSoup.find_all('RelatedMaterial')
+        for eachRelatedBlock in relatedBlock:
+            chkRelIdValue = eachRelatedBlock.find_all('IDValue')
+
+            # found related material, loop through
+
+            if len(chkRelIdValue) != 0:
+
+                for i in range(0,len(chkRelIdValue)):
+                    print originalIsbn,i, chkRelIdValue[i].string
+                    origId.append(originalIsbn)
+                    relId.append(chkRelIdValue[i].string)
+
+
+    result = zip(origId, relId)
     return result
 
 
@@ -211,17 +252,40 @@ def create_initial_db(dbName = 'sample.db'):
     conn.close()
 
 
-for i in range(73,74):
+
+for i in range(1,74):
     if len(str(i)) == 1:
         fileNr = '00' + str(i)
     else:
         fileNr = '0' + str(i)
 
-
     onxFile = 'titelbank/TB30_totaal_2014-03_' + fileNr + 'van073.onx/TB30_totaal_2014-03_' + fileNr + 'van073.onx'
+
+    res = parseOnxFilesRelated(onxFile)
+
+    out_file = "output_" + str(i) + ".csv"
+
+    with open(out_file, "wb") as f:
+        writer = csv.writer(f)
+        writer.writerows(res)
+
+    f.close()
+
+
+
+
+
+
+
     result = parseOnxFiles(onxFile)
+
+
     store_results(result)
 
 
+import csv
 
 
+with open("output.csv", "wb") as f:
+    writer = csv.writer(f)
+    writer.writerows(res2)
